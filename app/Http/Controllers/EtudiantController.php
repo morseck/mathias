@@ -7,7 +7,10 @@ use App\Etudiant;
 
 class EtudiantController extends Controller
 {
-
+     public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     public function add(Request $request)
     {
@@ -20,14 +23,18 @@ class EtudiantController extends Controller
     {
         $etudiant = Etudiant::findorfail($id);
 
-        return view('etudiant.show',compact('etudiant'));
+        $titre = trans('etudiant.detail');
+
+        return view('etudiant.show',compact('etudiant','titre'));
     }
 
     public function edit($id)
     {
         $etudiant = Etudiant::findorfail($id);
-
-        return view('etudiant.edit',compact('etudiant'));
+        
+        $titre = trans('etudiant.edition');
+        
+        return view('etudiant.edit',compact('etudiant','titre'));
     }
 
 
@@ -44,6 +51,8 @@ class EtudiantController extends Controller
  
     public function destroy($id)
     {
-        //
+        Etudiant::destroy($id);
+        $etudiants = Etudiant::all();
+        return view('home')->with('etudiants', $etudiants)->with('status', trans('etudiant.msgsupprimerok'));
     }
 }

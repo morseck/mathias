@@ -11,15 +11,19 @@
 |
 */
 
-/*Route::get('/', function () {
-    return view('welcome');
-});*/
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 
 
 Route::post('etudiants/add', 'EtudiantController@add')->name('addEtudiant');
+
 Route::get('etudiants/show/{id}', 'EtudiantController@show')->name('showEtudiant')->where('id','[0-9]+');
 
 
 Route::get('etudiants/edit/{id}', 'EtudiantController@edit')->name('editEtudiant')->where('id','[0-9]+');
 
 Route::put('etudiants/update/{id}', 'EtudiantController@update')->name('updateEtudiant')->where('id','[0-9]+');
+
+Route::get('etudiants/destroy/{id}', 'EtudiantController@destroy')->name('destroyEtudiant')->where('id','[0-9]+');
+
+Auth::routes();
